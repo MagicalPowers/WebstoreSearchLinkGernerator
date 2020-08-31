@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <title>Generate a Walmart Link to Our Products</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="alert alert-success" role="alert">
+          <h4 class="alert-heading">Create a Link to Our Products!</h4>
+          <p>Create a Link to send to a Customer.</p>
+          <p>
+            Enter a search term below to create a custom link to the walmart
+            website. This will(should) link to a page that only displays our
+            products.
+          </p>
+          <hr />
+          <form>
+            <div class="form-group">
+              <label for="SearchInput">Search for: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="searchInputBox"
+                aria-describedby="SearchHelp"
+              />
+              <small id="SearchHelp" class="form-text text-muted"
+                >Leave this blank to display ALL of our products.</small
+              >
+            </div>
+            <button type="submit" class="btn btn-primary" id="js-linkify">
+              Linkify!
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="alert alert-primary" role="alert">
+          <form>
+            <div class="form-group">
+              <label for="SearchInput">Search for: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="SearchInput"
+                aria-describedby="SearchHelp"
+              />
+              <small id="SearchHelp" class="form-text text-muted"
+                >Leave this blank to display ALL of our products.</small
+              >
+            </div>
+            <button type="submit" class="btn btn-primary">Linkify!</button>
+          </form>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="alert alert-primary" role="alert">
+          <div class="results">
+            <p class="results-name">
+              <strong>Send this link to Customer</strong>
+            </p>
+            <!-- <p class="results-link">
+              <a href="">LINK WILL APPEAR HERE</a>
+            </p> -->
+            <div class="btn-group" id="linkDump">
+              <div><a href="">LINK WILL APPEAR HERE</a></div>
+              <button
+                type="button"
+                class="btn btn-default btn-copy js-tooltip js-copy"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                data-copy="MUST FILL LINK HERE"
+                title="Copy to clipboard"
+              >
+                <!-- icon from google's material design library -->
+                <svg
+                  class="icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  version="1.1"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <form>
+          <div class="form-group">
+            <label for="SearchInput">Search for: </label>
+            <input
+              type="text"
+              class="form-control"
+              id="SearchInput"
+              aria-describedby="SearchHelp"
+            />
+            <small id="SearchHelp" class="form-text text-muted"
+              >Leave this blank to display ALL of our products.</small
+            >
+          </div>
+          <div class="form-group form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >Check me out</label
+            >
+          </div>
+          <button type="submit" class="btn btn-primary">Linkify!</button>
+        </form>
+      </div> -->
+      <!-- <div class="row">
+        <div class="col-sm">One of three columns</div>
+        <div class="col-sm">One of three columns</div>
+        <div class="col-sm">One of three columns</div>
+      </div>
+      <div class="row">
+        <div class="col">col</div>
+        <div class="col">col</div>
+        <div class="w-100"></div>
+        <div class="col">col</div>
+        <div class="col">col</div>
+      </div> -->
+    </div>
+    <!-- link to Google's CDN for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
+      data-auto-replace-svg="nest"
+    ></script>
+    <script>
+      function fillWithLink(term) {
+        var searchTerm = $(this).attr("data-name");
+        // var searchTermModified = searchTerm.replace(/\s/g, "+");
+        var linkUrl =
+          "https://www.walmart.com/search/?cat_id=0&facet=retailer%3AAmerican+Swag+Merch&query=" +
+          term;
+        var link2 = $("#linkDump").empty();
+        var newLink = $("<a>");
+        newLink.attr("href", linkUrl);
+        newLink.attr("target", "_blank");
+        newLink.attr("id", "myInput");
+        newLink.text(linkUrl);
+        $("#linkDump").append(newLink);
+        var newCopyButton = $("<button>");
+        newCopyButton.addClass("btn btn-default btn-copy js-tooltip js-copy");
+        newCopyButton.attr("type", "button");
+        newCopyButton.attr("data-toggle", "tooltip");
+        newCopyButton.attr("data-placement", "bottom");
+        newCopyButton.attr("data-copy", linkUrl);
+        newCopyButton.attr("title", "Copy to Clipboard");
+        newCopyButton.html('<i class="fas fa-clipboard"></i>');
+        newCopyButton.attr("onclick", "copyFunction()");
+        $("#linkDump").append(newCopyButton);
+      }
+
+      // =============================================================
+      function copyFunction() {
+        var copyText = document.getElementById("myInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        alert("Copied the text: " + copyText.value);
+      }
+      // function copyToClipboard(text, el) {
+      //   var copyTest = document.queryCommandSupported("copy");
+      //   var elOriginalText = el.attr("data-original-title");
+
+      //   if (copyTest === true) {
+      //     var copyTextArea = document.createElement("textarea");
+      //     copyTextArea.value = text;
+      //     document.body.appendChild(copyTextArea);
+      //     copyTextArea.select();
+      //     try {
+      //       var successful = document.execCommand("copy");
+      //       var msg = successful ? "Copied!" : "Whoops, not copied!";
+      //       el.attr("data-original-title", msg).tooltip("show");
+      //     } catch (err) {
+      //       console.log("Oops, unable to copy");
+      //     }
+      //     document.body.removeChild(copyTextArea);
+      //     el.attr("data-original-title", elOriginalText);
+      //   } else {
+      //     // Fallback if browser doesn't support .execCommand('copy')
+      //     window.prompt("Copy to clipboard: Ctrl+C or Command+C, Enter", text);
+      //   }
+      // }
+
+      $(document).ready(function () {
+        // Initialize
+        // ---------------------------------------------------------------------
+
+        // Copy to clipboard
+        // Grab any text in the attribute 'data-copy' and pass it to the
+        // copy function
+        //-------------------------------------------------------------------------------------
+        //this bit should pull the search term from the input box.
+        $("#js-linkify").on("click", function (event) {
+          event.preventDefault();
+          var term = $("#searchInputBox").val().trim().replace(/\s/g, "+");
+          fillWithLink(term);
+          console.log(term);
+        });
+        // $(".js-copy").on("click", function (event) {
+        //   event.preventDefault();
+        //   var text = $(this).attr("data-copy");
+        //   console.log(text);
+        // });
+        $(".js-copy").click(function () {
+          var text = $(this).attr("data-copy");
+          var el = $(this);
+          copyToClipboard(text, el);
+          console.log(text);
+        });
+      });
+    </script>
+  </body>
+</html>
